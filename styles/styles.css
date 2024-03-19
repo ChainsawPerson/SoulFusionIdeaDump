@@ -1,0 +1,53 @@
+#MainScreen {
+    position: absolute;
+    left: 50%;
+    margin: 10px 0 0 -400px;
+    width: 800px;
+    height: 450px;
+    outline: 5px solid black;
+    background-color: rgb(168, 165, 165);
+    align-items: center;
+    text-align: center;
+    text-wrap: balance;
+    font-family: "StempelGaramondRoman";
+}
+
+#LocationIndicator {
+    font-size: 30px;
+}
+
+#FadeLine {
+    display:block;
+    border:none;
+    color:white;
+    height:1px;
+    background:black;
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 200, from(#000), to(rgb(168, 165, 165)));
+}
+
+#CommandsSelection {
+    background-color: rgb(85, 85, 85);
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+    height: 75px;
+    margin: 42% 0px;
+    border-top: 5px solid black;
+}
+
+.CommandsContainers {
+    height: 75px;
+    width: 267px;
+    border: 1px solid black;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@font-face {
+    font-family: 'StempelGaramondRoman';
+    src: url('fonts/Stempel\ Garamond\ Roman.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

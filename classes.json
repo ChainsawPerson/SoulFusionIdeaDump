@@ -1,0 +1,15 @@
+[
+    {
+        "className" : "Default",
+        "classDescription" : "Default",
+        "classSkillList" : [
+            {
+                "skillName" : "Skill",
+                "skillDescription" : "A skill",
+                "skillType" : "Passive",
+                "skillBaseDamage" : 1,
+                "skillBaseCost" : 1
+            }
+        ]
+    }
+]
