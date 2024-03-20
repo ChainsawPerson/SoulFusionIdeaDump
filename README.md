@@ -5,9 +5,9 @@ Classes, Skills and Magic ideas to be used for future project SoulFusion.
 ```
 Classes:		|	Magic:			|	Souls:
 	Mage		|
-	Warrior	|
+	Warrior		|
 	Tank		|
-	Priest	|
+	Priest		|
 	Thief		|
 ```
 
