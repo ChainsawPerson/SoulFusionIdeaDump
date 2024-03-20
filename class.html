@@ -4,10 +4,19 @@
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/class.css">
         <link rel="stylesheet" href="styles/skills.css">
-        <title>Class</title>
+        <title id="ClassTitle"></title>
+        <script>
+            const title = document.getElementById('ClassTitle');
+            var foo = window.location.search.substring(1).split("=")[1];
+            const titleText = document.createTextNode(foo);
+            title.appendChild(titleText);
+        </script>
         <link rel="icon" href="images/favicon.png">
     </head>
     <body onload="classSpecific()">
+        <div id="Header">
+            <p id="appTitle">SoulFusion</p>
+        </div>
         <div id="ClassView"></div>
     </body>
     <button id="backButton" onclick="window.location.href='classes.html'">Back</button>
