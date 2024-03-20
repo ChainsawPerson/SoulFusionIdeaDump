@@ -37,6 +37,10 @@ button{
     height: 400px;
 }
 
+#Skill:hover {
+    box-shadow: #1b1a17 10px 10px 20px 10px;
+}
+
 #SkillName {
     font-weight: bolder;
     font-size: 45px;
