@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'StempelGaramondRoman';
+    src: url('fonts/Stempel\ Garamond\ Roman.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+p{
+    font-family: 'StempelGaramondRoman';
+}
+
+button{
+    animation: none;
+}
+
+#ClassView {
+    display: grid;
+    justify-content: center;
+    margin: auto;
+    width: 50%;
+    border: hidden;
+}
+
+#SkillsContainer {
+    display: grid;
+    margin: auto;
+    margin: 0px -400px;
+    grid-template-columns: 450px 450px 450px;
+}
+
+#Skill {
+    margin: 15px;
+    padding: 20px;
+    border: 3px double #1b1a17;
+    word-wrap: break-word;
+    width: 400px;
+    height: 400px;
+}
+
+#Skill:hover {
+    box-shadow: #1b1a17 10px 10px 20px 10px;
+}
+
+#SkillName {
+    font-weight: bolder;
+    font-size: 45px;
+}
+
+#SkillDescription {
+    font-weight: 600;
+    font-size: 30px;
+}
+
+#SkillType {
+    font-weight: 550;
+    font-size: 25px;
+}
+
+#SkillBaseDamage {
+    font-size: 25px;
+}
+
+#SkillBaseCost {
+    font-size: 25px;
+}

@@ -1,0 +1,19 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"soulfusion"},
+{"type":"table","name":"class","database":"soulfusion","data":
+[
+
+]
+}
+,{"type":"table","name":"class_skill_pairs","database":"soulfusion","data":
+[
+
+]
+}
+,{"type":"table","name":"skill","database":"soulfusion","data":
+[
+
+]
+}
+]

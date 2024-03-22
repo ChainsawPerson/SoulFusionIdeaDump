@@ -1,0 +1,126 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 22, 2024 at 08:56 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `soulfusion`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class`
+--
+
+CREATE TABLE `class` (
+  `class_index` int(11) NOT NULL,
+  `className` varchar(256) NOT NULL,
+  `classDescription` text NOT NULL,
+  `classSkill` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_skill_pairs`
+--
+
+CREATE TABLE `class_skill_pairs` (
+  `pair_index` int(11) NOT NULL,
+  `className` varchar(256) NOT NULL,
+  `skillName` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skill`
+--
+
+CREATE TABLE `skill` (
+  `skillName` varchar(256) NOT NULL,
+  `skillDescription` text DEFAULT NULL,
+  `skillType` text DEFAULT NULL,
+  `skillBaseDamage` text DEFAULT NULL,
+  `skillBaseCost` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `class`
+--
+ALTER TABLE `class`
+  ADD PRIMARY KEY (`class_index`),
+  ADD KEY `classSkill` (`classSkill`),
+  ADD KEY `class_skills` (`className`,`classSkill`) USING BTREE;
+
+--
+-- Indexes for table `class_skill_pairs`
+--
+ALTER TABLE `class_skill_pairs`
+  ADD PRIMARY KEY (`pair_index`),
+  ADD KEY `class_pair` (`className`),
+  ADD KEY `skill_pair` (`skillName`);
+
+--
+-- Indexes for table `skill`
+--
+ALTER TABLE `skill`
+  ADD PRIMARY KEY (`skillName`),
+  ADD KEY `skillName` (`skillName`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `class`
+--
+ALTER TABLE `class`
+  MODIFY `class_index` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `class_skill_pairs`
+--
+ALTER TABLE `class_skill_pairs`
+  MODIFY `pair_index` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `class`
+--
+ALTER TABLE `class`
+  ADD CONSTRAINT `classSkillName` FOREIGN KEY (`classSkill`) REFERENCES `skill` (`skillName`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `class_skill_pairs`
+--
+ALTER TABLE `class_skill_pairs`
+  ADD CONSTRAINT `class_pair` FOREIGN KEY (`className`) REFERENCES `class` (`className`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `skill_pair` FOREIGN KEY (`skillName`) REFERENCES `skill` (`skillName`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -5,13 +5,15 @@
         <link rel="stylesheet" href="styles/class.css">
         <link rel="stylesheet" href="styles/skills.css">
         <title id="ClassTitle"></title>
+        <link rel="icon" href="images/favicon.png" id="favicon">
         <script>
             const title = document.getElementById('ClassTitle');
             var foo = window.location.search.substring(1).split("=")[1];
             const titleText = document.createTextNode(foo);
             title.appendChild(titleText);
+            const favicon = document.getElementById('favicon');
+            favicon.href = 'images/' + foo + '.png';
         </script>
-        <link rel="icon" href="images/favicon.png">
     </head>
     <body onload="classSpecific()">
         <div id="Header">
