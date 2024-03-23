@@ -13,43 +13,10 @@ function Class(className, classDescription, classSkillList) {
     this.classSkillList = classSkillList;
 };
 
-/*
-    The main classes will be:
-    - Mage
-    - Warrior
-    - Tank
-    - Priest
-    - Thief
-*/
-
-/*
-const mageDescription = "The Mage excels in magic.";
-const warriorDescription = "The Warrior excels in physical damage.";
-const tankDescription = "The Tank excels in defence.";
-const priestDescription = "The Priest excels in holy damage.";
-const thiefDescription = "The Thief excels in speed and agility.";
-*/    
-const mageSkills = new ClassSkill('Fireball', 'Hurl a fireball at a foe', 'Active', 1, 1);
-/*  
-let Mage = new Class('Mage', mageDescription, [mageSkills]);
-Mage.classSkillList.push(new ClassSkill('Watergun', 'Throw water at a foe', 'Active', 1, 1));
-Mage.classSkillList.push(new ClassSkill('Grassknot', 'Throw leaves at a foe', 'Active', 1, 1));
-Mage.classSkillList.push(new ClassSkill('Hellfire', 'Rain fire upon your foes', 'Active', 10, 10));
-
-let Warrior = new Class('Warrior', warriorDescription, []);
-Warrior.classSkillList.push(new ClassSkill('Battle Furry', 'Increase damage when you have low health', 'Passive', 0, 0));
-
-const availableClasses = [Mage, Warrior];
-*/
-
-
-
-
-
 function createClassDiv(currentClass) {
     const parentDiv = document.getElementById("ClassView"); // Parent is ClassView
     const newCard = document.createElement("button"); // The class "Card"
-    newCard.onclick = function(){window.location.href = 'class.html?class='+ currentClass.className} // OnClick transfer to selected Class page
+    newCard.onclick = function(){window.location.replace(`/SoulFusion/Classes/${currentClass.className}`);} // OnClick transfer to selected Class page
     newCard.classList.add("ClassContainer"); // Define Card Class
 
     // Card Children:
@@ -153,8 +120,30 @@ function classDetails(selectedClass) {
 }
 
 function classSpecific() {
-    var foo = window.location.search.substring(1).split("=")[1];
+    const parts = window.location.href.split('/');
+    const foo = lastSegment = parts.pop() || parts.pop();
     console.log(foo);
-    if (foo === 'Mage') classDetails(Mage);
-    else classDetails(Warrior);
+    fetch(`../getClasses/${foo}`, {
+        method: "GET",
+        
+    }).then((response) => {
+        return response.json()
+    }).then((data) => {
+        let getClass = data[0];
+        var skillList = [];
+        for (var skill in getClass.classSkillList) {
+            skillList.push(new ClassSkill(
+                getClass.classSkillList[skill].skillName,
+                getClass.classSkillList[skill].skillDescription,
+                getClass.classSkillList[skill].skillType,
+                getClass.classSkillList[skill].skillBaseDamage,
+                getClass.classSkillList[skill].skillBaseCost
+            ));
+        }
+        classDetails(new Class(
+                getClass.className,
+                getClass.classDescription,
+                skillList
+            ))
+    });
 }

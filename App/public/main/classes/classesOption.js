@@ -7,4 +7,8 @@ router.get(`${baseURL}/Classes`, (req, res) => {
     res.status(200).sendFile(path.join(__dirname,'classes.html'));
 })
 
+router.get(`${baseURL}/Classes/:ClassName`, (req, res) => {
+    res.status(200).sendFile(path.join(__dirname,'class.html'));
+})
+
 module.exports = router;
