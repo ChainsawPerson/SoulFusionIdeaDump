@@ -3,17 +3,30 @@
 {"type":"database","name":"soulfusion"},
 {"type":"table","name":"class","database":"soulfusion","data":
 [
-
+{"className":"Archer","classDescription":"The Archer hits enemies from long range."},
+{"className":"Mage","classDescription":"The Mage excels in magic."},
+{"className":"Priest","classDescription":"The Priest excels in holy damage."},
+{"className":"Tank","classDescription":"The Tank excels in defence."},
+{"className":"Thief","classDescription":"The Thief excels in speed and agility."},
+{"className":"Warrior","classDescription":"The Warrior excels in physical damage."}
 ]
 }
 ,{"type":"table","name":"class_skill_pairs","database":"soulfusion","data":
 [
-
+{"pair_index":"1","className":"Mage","skillName":"Fireball"},
+{"pair_index":"2","className":"Mage","skillName":"Watergun"},
+{"pair_index":"3","className":"Warrior","skillName":"Battle Cry"},
+{"pair_index":"4","className":"Mage","skillName":"Clarity"},
+{"pair_index":"5","className":"Warrior","skillName":"Axe Throw"}
 ]
 }
 ,{"type":"table","name":"skill","database":"soulfusion","data":
 [
-
+{"skillName":"Axe Throw","skillDescription":"Throw an axe.\r\nThat's it.\r\n\r\nLiterally.","skillType":"Active","skillBaseDamage":"1","skillBaseCost":"1"},
+{"skillName":"Battle Cry","skillDescription":"Roar to increase damage","skillType":"Active","skillBaseDamage":"0","skillBaseCost":"1"},
+{"skillName":"Clarity","skillDescription":"Reduce Mana Consumption","skillType":"Passive","skillBaseDamage":"0","skillBaseCost":"1"},
+{"skillName":"Fireball","skillDescription":"Throw fireball","skillType":"Active","skillBaseDamage":"1","skillBaseCost":"1"},
+{"skillName":"Watergun","skillDescription":"Spray water","skillType":"Active","skillBaseDamage":"1","skillBaseCost":"1"}
 ]
 }
 ]

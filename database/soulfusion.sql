@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2024 at 08:56 PM
+-- Generation Time: Mar 23, 2024 at 02:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,10 +28,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `class` (
-  `class_index` int(11) NOT NULL,
   `className` varchar(256) NOT NULL,
-  `classDescription` text NOT NULL,
-  `classSkill` varchar(256) NOT NULL
+  `classDescription` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -68,9 +66,7 @@ CREATE TABLE `skill` (
 -- Indexes for table `class`
 --
 ALTER TABLE `class`
-  ADD PRIMARY KEY (`class_index`),
-  ADD KEY `classSkill` (`classSkill`),
-  ADD KEY `class_skills` (`className`,`classSkill`) USING BTREE;
+  ADD PRIMARY KEY (`className`);
 
 --
 -- Indexes for table `class_skill_pairs`
@@ -92,12 +88,6 @@ ALTER TABLE `skill`
 --
 
 --
--- AUTO_INCREMENT for table `class`
---
-ALTER TABLE `class`
-  MODIFY `class_index` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `class_skill_pairs`
 --
 ALTER TABLE `class_skill_pairs`
@@ -106,12 +96,6 @@ ALTER TABLE `class_skill_pairs`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `class`
---
-ALTER TABLE `class`
-  ADD CONSTRAINT `classSkillName` FOREIGN KEY (`classSkill`) REFERENCES `skill` (`skillName`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `class_skill_pairs`
