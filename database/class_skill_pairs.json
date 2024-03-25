@@ -1,0 +1,13 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"soulfusion"},
+{"type":"table","name":"class_skill_pairs","database":"soulfusion","data":
+[
+{"pair_index":"1","className":"Mage","skillName":"Clarity"},
+{"pair_index":"2","className":"Mage","skillName":"Fireball"},
+{"pair_index":"3","className":"Mage","skillName":"Watergun"},
+{"pair_index":"4","className":"Warrior","skillName":"Axe Throw"},
+{"pair_index":"5","className":"Warrior","skillName":"Battle Cry"}
+]
+}
+]

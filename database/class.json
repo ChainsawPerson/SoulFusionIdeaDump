@@ -1,0 +1,14 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"soulfusion"},
+{"type":"table","name":"class","database":"soulfusion","data":
+[
+{"className":"Archer","classDescription":"The Archer hits enemies from long range."},
+{"className":"Mage","classDescription":"The Mage excels in magic."},
+{"className":"Priest","classDescription":"The Priest excels in holy damage."},
+{"className":"Tank","classDescription":"The Tank excels in defence."},
+{"className":"Thief","classDescription":"The Thief excels in speed and agility."},
+{"className":"Warrior","classDescription":"The Warrior excels in physical damage."}
+]
+}
+]

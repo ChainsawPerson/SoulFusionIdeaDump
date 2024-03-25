@@ -1,0 +1,13 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"soulfusion"},
+{"type":"table","name":"skill","database":"soulfusion","data":
+[
+{"skillName":"Axe Throw","skillDescription":"Throw an axe.\r\nThat's it.\r\n\r\nLiterally.","skillType":"Active","skillBaseDamage":"1","skillBaseCost":"1"},
+{"skillName":"Battle Cry","skillDescription":"Roar to increase damage","skillType":"Active","skillBaseDamage":"0","skillBaseCost":"1"},
+{"skillName":"Clarity","skillDescription":"Reduce Mana Consumption","skillType":"Passive","skillBaseDamage":"0","skillBaseCost":"1"},
+{"skillName":"Fireball","skillDescription":"Throw fireball","skillType":"Active","skillBaseDamage":"1","skillBaseCost":"1"},
+{"skillName":"Watergun","skillDescription":"Spray water","skillType":"Active","skillBaseDamage":"1","skillBaseCost":"1"}
+]
+}
+]
