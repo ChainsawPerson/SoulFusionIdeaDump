@@ -3,38 +3,48 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const exec = require('child_process').exec;
 const router = express.Router();
-const options = require('../routes/router.js');
+const options = require('../routes/options.js');
 const baseURL = options.baseUrl;
 const databaseConfig = options.databaseConfig;
-
+const password = options.adminPassword; // Change admin Password in /routes/options.js
+let authMessage = options.responseErrorMessage; // Authentication Error Message For Incorrect Password Usage
+authMessage.error.code = 403;
+authMessage.error.message = "Authentication Error: Incorrect Password";
 let dumpFile = 'C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/soulfusion.sql';
+const tableDir = 'C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/';
 
 router.use(bodyParser());
 
 router.post(`${baseURL}/admin/restoreBackup`, async (req, res) => {
 
     exec(`G:/xampp/mysql/bin/mysql -u ${databaseConfig.user} -h ${databaseConfig.host} ${databaseConfig.database} < ${dumpFile}`, (err, stdout, stderr) => {
-        if(!(req.body.password === 'S.A.G.A.P.O')) { // Check for password
-            res.status(403).json({"message":"Wrong password"});
+        if(!(req.body.password === password)) { // Check for password
+            res.status(403).json(authMessage);
             return;
         }
         if (err) { 
             console.error(`exec error: ${err}`); 
-            res.status(500).json({"message":"Couldn't restore DB"});
+            let errorMessage = options.responseErrorMessage;
+            errorMessage.error.code = 500;
+            errorMessage.err.message = "Unexpected Internal Error: Could not Restore Backup";
+            res.status(500).json(errorMessage);
             return; 
         }
-        res.status(200).json({"message" : stdout});
+        let resultsMessage = options.responseResultMessage;
+        resultsMessage.results.code = 200;
+        resultsMessage.results.message = "Database Restore Succesful";
+        res.status(200).json(resultsMessage);
     });
 
 });
 
 router.post(`${baseURL}/admin/loadClass`, async (req, res) => {
-    if(!(req.body.password === 'S.A.G.A.P.O')) {
-        res.status(403).json({"message":"Wrong password"});
+    if(!(req.body.password === password)) {
+        res.status(403).json(authMessage);
         return;
     }
     const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require('C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/class.json');
+    const jsonFile = require(tableDir + 'class.json');
     // Get JSON file path
     const Classes = jsonFile[2].data; // First 2 elements are metadata
     let data = [];
@@ -48,21 +58,27 @@ router.post(`${baseURL}/admin/loadClass`, async (req, res) => {
     classDescription = VALUES(classDescription)`;
     connection.query(classQuery,[data],(error, results) => {
         if(error) {
-            res.status(500).json({"message":error.message});
+            let errorMessage = options.responseErrorMessage;
+            errorMessage.error.code = 500;
+            errorMessage.err.message = "Unexpected Internal Error Occured";
+            res.status(500).json(errorMessage);
         } else {
-            res.status(200).json({"message":"Insertion complete"});
+            let resultsMessage = options.responseResultMessage;
+            resultsMessage.results.code = 200;
+            resultsMessage.results.message = "Insertion Succesful";
+            res.status(200).json(resultsMessage);
         }
     });
     connection.end();
 });
 
 router.post(`${baseURL}/admin/loadSkill`, async (req, res) => {
-    if(!(req.body.password === 'S.A.G.A.P.O')) {
-        res.status(403).json({"message":"Wrong password"});
+    if(!(req.body.password === password)) {
+        res.status(403).json(authMessage);
         return;
     }
     const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require('C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/skill.json');
+    const jsonFile = require(tableDir + 'skill.json');
     const Skills = jsonFile[2].data;
     let data = [];
     for(let i in Skills) {
@@ -78,21 +94,27 @@ router.post(`${baseURL}/admin/loadSkill`, async (req, res) => {
     skillBaseCost = VALUES(skillBaseCost)`;
     connection.query(skillQuery,[data],(error, results) => {
         if(error) {
-            res.status(500).json({"message":error.message});
+            let errorMessage = options.responseErrorMessage;
+            errorMessage.error.code = 500;
+            errorMessage.err.message = "Unexpected Internal Error Occured";
+            res.status(500).json(errorMessage);
         } else {
-            res.status(200).json({"message":"Insertion complete"});
+            let resultsMessage = options.responseResultMessage;
+            resultsMessage.results.code = 200;
+            resultsMessage.results.message = "Insertion Succesful";
+            res.status(200).json(resultsMessage);
         }
     });
     connection.end();
 });
 
 router.post(`${baseURL}/admin/loadPair`, async (req, res) => {
-    if(!(req.body.password === 'S.A.G.A.P.O')) {
-        res.status(403).json({"message":"Wrong password"});
+    if(!(req.body.password === password)) {
+        res.status(403).json(authMessage);
         return;
     }
     const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require('C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/class_skill_pairs.json');
+    const jsonFile = require(tableDir + 'class_skill_pairs.json');
     const Pairs = jsonFile[2].data;
     let data = [];
     for(let i in Pairs) {
@@ -106,9 +128,15 @@ router.post(`${baseURL}/admin/loadPair`, async (req, res) => {
     skillName = VALUES(skillName)`;
     connection.query(pairQuery,[data],(error, results) => {
         if(error) {
-            res.status(500).json({"message":error.message});
+            let errorMessage = options.responseErrorMessage;
+            errorMessage.error.code = 500;
+            errorMessage.err.message = "Unexpected Internal Error Occured";
+            res.status(500).json(errorMessage);
         } else {
-            res.status(200).json({"message":"Insertion complete"});
+            let resultsMessage = options.responseResultMessage;
+            resultsMessage.results.code = 200;
+            resultsMessage.results.message = "Insertion Succesful";
+            res.status(200).json(resultsMessage);
         }
     });
     connection.end();

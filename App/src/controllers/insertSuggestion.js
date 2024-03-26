@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const baseURL = require('../routes/router.js').baseUrl;
+const options = require('../routes/options.js');
 const classJSON = 'C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/classSuggestions.json';
 const fs = require('fs');
 const bodyParser = require('body-parser');
-
+const baseURL = options.baseUrl;
 router.use(bodyParser());
 
 router.post(`${baseURL}/suggestClass`, async (req, res) => {
     if(!req.body) {
-        res.send(400).json({"message":"no suggestion made"});
+        let errorMessage = options.responseErrorMessage;
+        errorMessage.error.code = 400;
+        errorMessage.error.message = "No body provided";
+        res.send(400).json(errorMessage);
         return;
     }
     const suggestion = req.body;
@@ -18,14 +21,19 @@ router.post(`${baseURL}/suggestClass`, async (req, res) => {
         json.push(suggestion);
         fs.writeFile(classJSON, JSON.stringify(json), function (error){
             if(err) {
-                res.status(500).json({"message":"problem in adding suggestion"});
+                let errorMessage = options.responseErrorMessage;
+                errorMessage.error.code = 500;
+                errorMessage.error.message = "Unexpected Internal Error Occured";
+                res.status(500).json(errorMessage);
                 console.error(error);
                 throw error;
             }
         });
     });
-
-    res.status(200).json({"message":"suggestion added"});
+    let resultsMessage = options.responseResultMessage;
+    resultsMessage.results.code = 201;
+    resultsMessage.results.message = "Succesfully Inserted Suggestion";
+    res.status(201).json(resultsMessage);
 });
 
 module.exports = router;

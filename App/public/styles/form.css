@@ -1,0 +1,67 @@
+form {
+    font-family: 'StempelGaramondRoman';
+    padding-left: 15px;
+}
+
+.formTitle {
+    font-size: 60px;
+    text-align: center;
+}
+
+body {
+    height: 200vh;
+}
+
+input {
+    font-family: 'StempelGaramondRoman';
+    margin: 20px;
+    border: 1px solid #1b1a17;
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0.1);
+    width: 450px;
+    font-size: 50px;
+}
+
+textarea {
+    font-family: 'StempelGaramondRoman';
+    border: 1px solid #1b1a17;
+    width: 450px;
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0.1);
+    font-size: 50px;
+    margin: 20px;
+    resize: none;
+}
+
+#addSkill {
+    margin: 30px;
+    justify-self: flex-end;
+}
+
+#classForm {
+    display: flex;
+    justify-content: center;
+}
+
+#suggestSkill {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: space-evenly;
+}
+
+.suggestSkillCard {
+    margin: 10px;
+    border: 4px double;
+    border-radius: 20px;
+}
+
+#submitForm {
+    margin-bottom: 10px;
+}
+
+@font-face {
+    font-family: 'StempelGaramondRoman';
+    src: url('../fonts/Stempel\ Garamond\ Roman.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

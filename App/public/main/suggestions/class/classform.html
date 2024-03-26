@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../../../styles/main.css">
+        <link rel="stylesheet" href="../../../styles/form.css">
+        <title>SoulFusion</title>
+        <link rel="icon" href="../../../images/favicon.png">
+    </head>
+    <body onload="">
+        <div id="Header">
+            <p id="appTitle">SoulFusion</p>
+            <p id="appDescription" style="font-size: 30px;">Create your own class!
+                <br>
+                Let your imagination run free and create a class
+                you would like to see in the game!
+                <br>
+                You can also add our own skills or any other ideas you may have.
+                <br>
+                You can attach your name or gamertag if you want
+                to be mentioned, should your suggestions be implemented! :D
+            </p>
+        </div>
+        <div id="classForm">
+            <form id="suggestClass" style="font-size: 50px;">
+                <p id="classFormTitle" class="formTitle">Create your Class</p>
+                <label for="className">Class Name:</label>
+                <br>
+                <input type="text" id="className" name="className">
+                <br>
+                <label for="classDescription">Class Description:</label><br>
+                <textarea id="classDescription" name="classDescription" style="height: 200px;"></textarea>
+                <br>
+                <label for="classNotes">Notes:</label>
+                <br>
+                <textarea id="classNotes" name="classNotes" style="height: 150px;"></textarea>
+                <br>
+                
+                <div id="suggestSkill" hidden>
+
+                </div>
+                <label for="creatorName">Your name (optional):</label>
+                <br>
+                <input type="text" id="creatorName" name="creatorName">
+                <br>
+            </form>
+        </div>
+        <div style="display: flex; justify-content: space-around;">
+            <button id="addSkill" onclick="showForm()">Add Skills</button>
+            <button type="submit" id="submitForm" onclick="getData()">Submit</button>
+        </div>
+        <script src="../class/submitform.js"></script>
+    </body>
+</html>

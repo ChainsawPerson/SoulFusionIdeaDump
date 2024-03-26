@@ -148,13 +148,6 @@ function classSpecific() {
     });
 }
 
-function createClassSuggestion(suggestion) {
-    fetch('../suggestClass',{
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        body: JSON.stringify(suggestion)
-    });
+function classSuggestion() {
+    window.open(`http://localhost:9876/SoulFusion/ClassForm`);
 }

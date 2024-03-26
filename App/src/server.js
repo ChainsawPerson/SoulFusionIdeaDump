@@ -7,9 +7,10 @@ const frontToBack = require('./controllers/frontToBack.js');
 const app = express();
 const port = 9876;
 
-app.use('/', main);
-app.use('/', database);
-app.use('/', frontToBack);
+app.use('/', main); // Homepage: main.html
+app.use('/', database); // All Database API Requests
+app.use('/', frontToBack); // API Requests for Input from Frontend to Backend
+
 const server = app.listen(port, () => {
     console.log(`Server is running on port ${port}.`);
 });

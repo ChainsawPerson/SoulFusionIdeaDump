@@ -1,7 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2');
 const router = express.Router();
-const options = require('../routes/router.js');
+const options = require('../routes/options.js');
 
 const baseURL = options.baseUrl;
 const databaseConfig = options.databaseConfig;
@@ -16,7 +16,12 @@ router.get(`${baseURL}/getClasses`, async (req, res) => {
 
          connection.query(titleQuery, (error, results) => {
             if (error) {
-              throw error;
+              let errorMessage = options.responseErrorMessage;
+              errorMessage.error.code = 500;
+              errorMessage.error.message = "Unexpected Internal Error Occured";
+              res.status(500).json(errorMessage);
+              console.error(error);
+              return;
             } else {
               res.status(200).send(results);
             }

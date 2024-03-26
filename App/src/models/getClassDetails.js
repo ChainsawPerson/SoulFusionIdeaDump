@@ -1,17 +1,18 @@
 const express = require('express');
 const mysql = require('mysql2');
 const router = express.Router();
-const options = require('../routes/router.js');
+const options = require('../routes/options.js');
 
 const baseURL = options.baseUrl;
 const databaseConfig = options.databaseConfig;
 
 router.get(`${baseURL}/getClasses/:ClassName`, async (req, res) => {
-    if(!req.params.ClassName)
-        res.status(400).json({
-    "status" : "Not OK", 
-    "message" : "No param given"
-    });
+    if(!req.params.ClassName) {
+        let errorMessage = options.responseErrorMessage;
+        errorMessage.error.code = 400;
+        errorMessage.error.message = "Did not provide parameter";
+        res.status(400).json(errorMessage);
+    }
 
     const connection = mysql.createConnection(databaseConfig);
 
@@ -36,7 +37,8 @@ router.get(`${baseURL}/getClasses/:ClassName`, async (req, res) => {
 
     connection.query(classQuery, [req.params.ClassName], (error, results) => {
         if (error) {
-            res.status(404).json({message: "oops"});
+            res.status(404).json(options.responseErrorMessage);
+            return;
         } else {
             // Organize data into desired structure
             const data = {};
