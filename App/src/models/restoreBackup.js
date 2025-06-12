@@ -10,14 +10,18 @@ const password = options.adminPassword; // Change admin Password in /routes/opti
 let authMessage = options.responseErrorMessage; // Authentication Error Message For Incorrect Password Usage
 authMessage.error.code = 403;
 authMessage.error.message = "Authentication Error: Incorrect Password";
-let dumpFile = 'C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/soulfusion.sql';
-const tableDir = 'C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/';
+
+const os = require('os');
+
+let dumpFile = require('../routes/filepaths.js').soulfusionDatabasePath; // Path to the SQL dump file
+const tableDir = require('../routes/filepaths.js').databasePath; // Path to the database directory
 
 router.use(bodyParser());
 
 router.post(`${baseURL}/admin/restoreBackup`, async (req, res) => {
-
-    exec(`G:/xampp/mysql/bin/mysql -u ${databaseConfig.user} -h ${databaseConfig.host} ${databaseConfig.database} < ${dumpFile}`, (err, stdout, stderr) => {
+    const isWindows = os.platform() === 'win32';
+    const mysqlPath = isWindows ? 'G:/xampp/mysql/bin/mysql' : 'mysql'; // Adjust path for Windows or Linux
+    exec(`${mysqlPath} -u ${databaseConfig.user} -h ${databaseConfig.host} ${databaseConfig.database} < ${dumpFile}`, (err, stdout, stderr) => {
         if(!(req.body.password === password)) { // Check for password
             res.status(403).json(authMessage);
             return;
@@ -44,7 +48,7 @@ router.post(`${baseURL}/admin/loadClass`, async (req, res) => {
         return;
     }
     const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require(tableDir + 'class.json');
+    const jsonFile = require(tableDir + '/class.json');
     // Get JSON file path
     const Classes = jsonFile[2].data; // First 2 elements are metadata
     let data = [];
@@ -78,7 +82,7 @@ router.post(`${baseURL}/admin/loadSkill`, async (req, res) => {
         return;
     }
     const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require(tableDir + 'skill.json');
+    const jsonFile = require(tableDir + '/skill.json');
     const Skills = jsonFile[2].data;
     let data = [];
     for(let i in Skills) {
@@ -114,7 +118,7 @@ router.post(`${baseURL}/admin/loadPair`, async (req, res) => {
         return;
     }
     const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require(tableDir + 'class_skill_pairs.json');
+    const jsonFile = require(tableDir + '/class_skill_pairs.json');
     const Pairs = jsonFile[2].data;
     let data = [];
     for(let i in Pairs) {

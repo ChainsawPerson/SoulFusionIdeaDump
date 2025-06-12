@@ -3,17 +3,7 @@ const router = express.Router();
 const options = require('../routes/options.js');
 
 // Path to the JSON file where class suggestions are stored
-const path = require('path');
-const os = require('os');
-
-let classJSON;
-
-if (os.platform() === 'win32') {
-    classJSON = path.join('C:', 'Users', 'takis', 'Documents', 'GitHub', 'SoulFusionIdeaDump', 'database', 'classSuggestions.json');
-}
-else {
-    classJSON = path.join(os.homedir(), 'Documents', 'SoulFusionIdeaDump', 'database', 'classSuggestions.json');
-}
+const classJSON = require('../routes/filepaths.js').classSuggestionsPath;
 const fs = require('fs');
 
 const bodyParser = require('body-parser');
