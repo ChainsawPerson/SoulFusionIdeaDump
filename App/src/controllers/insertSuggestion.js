@@ -1,8 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const options = require('../routes/options.js');
-const classJSON = 'C:/Users/takis/Documents/GitHub/SoulFusionIdeaDump/database/classSuggestions.json';
+
+// Path to the JSON file where class suggestions are stored
+const path = require('path');
+const os = require('os');
+
+let classJSON;
+
+if (os.platform() === 'win32') {
+    classJSON = path.join('C:', 'Users', 'takis', 'Documents', 'GitHub', 'SoulFusionIdeaDump', 'database', 'classSuggestions.json');
+}
+else {
+    classJSON = path.join(os.homedir(), 'Documents', 'SoulFusionIdeaDump', 'database', 'classSuggestions.json');
+}
 const fs = require('fs');
+
 const bodyParser = require('body-parser');
 const baseURL = options.baseUrl;
 router.use(bodyParser());
@@ -16,7 +29,9 @@ router.post(`${baseURL}/suggestClass`, async (req, res) => {
         return;
     }
     const suggestion = req.body;
+    console
     fs.readFile(classJSON, function (err, data) {
+        console.log(data);
         var json = JSON.parse(data);
         json.push(suggestion);
         fs.writeFile(classJSON, JSON.stringify(json), function (error){
