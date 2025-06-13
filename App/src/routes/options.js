@@ -1,12 +1,15 @@
+require('dotenv').config(); // Load environment variables from .env file
+
 const baseURL = '/SoulFusion';
 
-const adminPassword = 'S.A.G.A.P.O'; // Password for admin commands
+const adminPassword = process.env.ADMIN_PASSWORD; // Password for admin commands
 
 const databaseConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'soulfusion'
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
+    port: DB_PORT
 };
 
 const responseErrorMessage = { // Wireframe of Error Message Response

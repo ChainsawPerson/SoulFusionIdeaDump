@@ -20,8 +20,8 @@ router.use(bodyParser());
 
 router.post(`${baseURL}/admin/restoreBackup`, async (req, res) => {
     const isWindows = os.platform() === 'win32';
-    const mysqlPath = isWindows ? 'G:/xampp/mysql/bin/mysql' : 'mysql'; // Adjust path for Windows or Linux
-    exec(`${mysqlPath} -u ${databaseConfig.user} -h ${databaseConfig.host} ${databaseConfig.database} < ${dumpFile}`, (err, stdout, stderr) => {
+    const mysqlPath = isWindows ? `C:/"Program Files"/"MariaDB 11.8"/bin/mysql` : 'mysql'; // Adjust path for Windows or Linux
+    exec(`${mysqlPath} -u ${databaseConfig.user} -h ${databaseConfig.host} ${databaseConfig.database} -p < ${dumpFile}`, (err, stdout, stderr) => {
         if(!(req.body.password === password)) { // Check for password
             res.status(403).json(authMessage);
             return;
