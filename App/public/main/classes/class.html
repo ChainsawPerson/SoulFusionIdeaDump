@@ -18,12 +18,12 @@
     </head>
     <body onload="classSpecific()">
         <div id="Header">
-            <p id="appTitle">SoulFusion</p>
+            <p id="appTitle" onclick="window.location.href = '/SoulFusion'">SoulFusion</p>
         </div>
         <div id="ClassView"></div>
     </body>
     <div class="navigationButtons">
-        <button id="backButton" onclick="window.location.href='/SoulFusion/Classes'">Back</button>
+        <button id="backButton" onclick="history.back()">Back</button>
         <button id="skillSuggestion" class="suggestionButton">+</button>
     </div>
     <script src="../../main/classes/classes.js"></script>

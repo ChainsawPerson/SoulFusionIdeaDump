@@ -16,7 +16,7 @@ function Class(className, classDescription, classSkillList) {
 function createClassDiv(currentClass) {
     const parentDiv = document.getElementById("ClassView"); // Parent is ClassView
     const newCard = document.createElement("button"); // The class "Card"
-    newCard.onclick = function(){window.location.replace(`/SoulFusion/Classes/${currentClass.className}`);} // OnClick transfer to selected Class page
+    newCard.onclick = function(){window.location.href = `/SoulFusion/Classes/${currentClass.className}`;} // OnClick transfer to selected Class page
     newCard.classList.add("ClassContainer"); // Define Card Class
 
     // Card Children:

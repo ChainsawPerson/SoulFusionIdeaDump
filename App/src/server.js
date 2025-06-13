@@ -12,7 +12,8 @@ app.use('/', database); // All Database API Requests
 app.use('/', frontToBack); // API Requests for Input from Frontend to Backend
 
 const server = app.listen(port, () => {
-    console.log(`Server is running on port ${port}.`);
+    console.log(`Server is running on port ${port}.
+        http://localhost:${port}/SoulFusion`);
 });
 
 process.on("unhandledRejection", err => {
