@@ -149,5 +149,6 @@ function classSpecific() {
 }
 
 function classSuggestion() {
-    window.open(`http://localhost:9876/SoulFusion/ClassForm`);
+    const original = window.location.origin;
+    window.open(`${original}/SoulFusion/ClassForm`);
 }

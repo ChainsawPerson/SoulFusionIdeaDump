@@ -7,7 +7,7 @@ button2.innerText = "Magic";
 button3.innerText = "Souls";
 
 function checkClasses() {
-    window.location.href ='http://localhost:9876/SoulFusion/Classes';
+    window.location.href =`${window.location.origin}/SoulFusion/Classes`;
     console.log(button1.innerText);
 }
 
