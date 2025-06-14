@@ -9,10 +9,12 @@ const databasePath = path.join(basePath, 'database');
 // Define paths for various JSON and SQL files in the database
 const classSuggestionsPath = path.join(databasePath, 'classSuggestions.json');
 const soulfusionDatabasePath = path.join(databasePath, 'soulfusion.sql');
+const databaseBackupPath = path.join(databasePath, 'backup.sql');
 
 // Export the paths as a module
 module.exports = {
     databasePath: databasePath,
     classSuggestionsPath: classSuggestionsPath,
-    soulfusionDatabasePath: soulfusionDatabasePath
+    soulfusionDatabasePath: soulfusionDatabasePath,
+    databaseBackupPath: databaseBackupPath
 }

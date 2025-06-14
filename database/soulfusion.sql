@@ -17,6 +17,8 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+SET FOREIGN_KEY_CHECKS = 0;
+
 --
 -- Database: `soulfusion`
 --
@@ -27,7 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `class`
 --
 
-CREATE TABLE `class` (
+CREATE TABLE IF NOT EXISTS `class` (
   `className` varchar(256) NOT NULL,
   `classDescription` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -38,7 +40,7 @@ CREATE TABLE `class` (
 -- Table structure for table `class_skill_pairs`
 --
 
-CREATE TABLE `class_skill_pairs` (
+CREATE TABLE IF NOT EXISTS `class_skill_pairs` (
   `pair_index` int(11) NOT NULL,
   `className` varchar(256) NOT NULL,
   `skillName` varchar(256) NOT NULL
@@ -50,7 +52,7 @@ CREATE TABLE `class_skill_pairs` (
 -- Table structure for table `skill`
 --
 
-CREATE TABLE `skill` (
+CREATE TABLE IF NOT EXISTS `skill` (
   `skillName` varchar(256) NOT NULL,
   `skillDescription` text DEFAULT NULL,
   `skillType` text DEFAULT NULL,
@@ -66,22 +68,22 @@ CREATE TABLE `skill` (
 -- Indexes for table `class`
 --
 ALTER TABLE `class`
-  ADD PRIMARY KEY (`className`);
+  ADD PRIMARY KEY IF NOT EXISTS (`className`);
 
 --
 -- Indexes for table `class_skill_pairs`
 --
 ALTER TABLE `class_skill_pairs`
-  ADD PRIMARY KEY (`pair_index`),
-  ADD KEY `class_pair` (`className`),
-  ADD KEY `skill_pair` (`skillName`);
+  ADD PRIMARY KEY IF NOT EXISTS (`pair_index`),
+  ADD KEY IF NOT EXISTS `class_pair` (`className`),
+  ADD KEY IF NOT EXISTS `skill_pair` (`skillName`);
 
 --
 -- Indexes for table `skill`
 --
 ALTER TABLE `skill`
-  ADD PRIMARY KEY (`skillName`),
-  ADD KEY `skillName` (`skillName`);
+  ADD PRIMARY KEY IF NOT EXISTS (`skillName`),
+  ADD KEY IF NOT EXISTS `skillName` (`skillName`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -104,6 +106,8 @@ ALTER TABLE `class_skill_pairs`
   ADD CONSTRAINT `class_pair` FOREIGN KEY (`className`) REFERENCES `class` (`className`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `skill_pair` FOREIGN KEY (`skillName`) REFERENCES `skill` (`skillName`);
 COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

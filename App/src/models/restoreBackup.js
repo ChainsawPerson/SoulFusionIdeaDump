@@ -2,148 +2,154 @@ const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const exec = require('child_process').exec;
+const os = require('os');
 const router = express.Router();
 const options = require('../routes/options.js');
 const baseURL = options.baseUrl;
 const databaseConfig = options.databaseConfig;
-const password = options.adminPassword; // Change admin Password in /routes/options.js
-let authMessage = options.responseErrorMessage; // Authentication Error Message For Incorrect Password Usage
+const password = options.adminPassword;
+const authMessage = options.responseErrorMessage; // Authentication Error Message For Incorrect Password Usage
 authMessage.error.code = 403;
 authMessage.error.message = "Authentication Error: Incorrect Password";
 
-const os = require('os');
-
-let dumpFile = require('../routes/filepaths.js').soulfusionDatabasePath; // Path to the SQL dump file
+const dumpFile = require('../routes/filepaths.js').soulfusionDatabasePath; // Path to the SQL dump file
+const mysqlDumpPath = require('../routes/filepaths.js').databaseBackupPath; // Path to the MySQL dump file
 const tableDir = require('../routes/filepaths.js').databasePath; // Path to the database directory
 
-router.use(bodyParser());
+router.use(bodyParser.json()); // Use `json()` as the middleware for parsing JSON bodies
 
+
+// Route to create a backup of the database
+router.post(`${baseURL}/admin/createBackup`, async (req, res) => {
+    if (req.body.password !== password) {
+        return res.status(403).json({ error: { code: 403, message: "Authentication Error: Incorrect Password" } });
+    }
+
+    const isWindows = os.platform() === 'win32';
+    const mysqldumpPath = isWindows 
+        ? `C:/"Program Files"/"MariaDB 11.8"/bin/mysqldump` 
+        : 'mysqldump'; // Adjust path for Windows or Linux
+
+    // Construct the command to create a backup
+    const backupCommand = `${mysqldumpPath} -u ${databaseConfig.user} -h ${databaseConfig.host} ${databaseConfig.database} -p${databaseConfig.password} > ${mysqlDumpPath}`;
+
+    exec(backupCommand, (err, stdout, stderr) => {
+        if (err) {
+            console.error(`Error creating backup: ${err}`);
+            return res.status(500).json({ error: { code: 500, message: "Unexpected Internal Error: Could not create backup" } });
+        }
+
+        // Success response
+        res.status(200).json({
+            results: {
+                code: 200,
+                message: "Backup Created Successfully"
+            }
+        });
+    });
+});
+
+module.exports = router;
+
+// Function to handle MySQL queries using async/await
+const executeQuery = (query, params) => {
+    return new Promise((resolve, reject) => {
+        const connection = mysql.createConnection(databaseConfig);
+        connection.query(query, params, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+        connection.end();
+    });
+};
+
+// Route for restoring the database backup
 router.post(`${baseURL}/admin/restoreBackup`, async (req, res) => {
+    if (req.body.password !== password) {
+        return res.status(403).json(authMessage); // Unauthorized
+    }
+
     const isWindows = os.platform() === 'win32';
     const mysqlPath = isWindows ? `C:/"Program Files"/"MariaDB 11.8"/bin/mysql` : 'mysql'; // Adjust path for Windows or Linux
+
     exec(`${mysqlPath} -u ${databaseConfig.user} -h ${databaseConfig.host} ${databaseConfig.database} -p < ${dumpFile}`, (err, stdout, stderr) => {
-        if(!(req.body.password === password)) { // Check for password
-            res.status(403).json(authMessage);
-            return;
-        }
-        if (err) { 
-            console.error(`exec error: ${err}`); 
+        if (err) {
+            console.error(`exec error: ${err}`);
             let errorMessage = options.responseErrorMessage;
             errorMessage.error.code = 500;
-            errorMessage.err.message = "Unexpected Internal Error: Could not Restore Backup";
-            res.status(500).json(errorMessage);
-            return; 
+            errorMessage.error.message = "Unexpected Internal Error: Could not Restore Backup";
+            return res.status(500).json(errorMessage);
         }
         let resultsMessage = options.responseResultMessage;
         resultsMessage.results.code = 200;
-        resultsMessage.results.message = "Database Restore Succesful";
+        resultsMessage.results.message = "Database Restore Successful";
         res.status(200).json(resultsMessage);
     });
-
 });
 
+// Generic function to load data from JSON into a table
+const loadDataIntoTable = async (filePath, tableName, columnNames, query) => {
+    const jsonFile = require(filePath); // Load JSON file
+    const data = jsonFile[2].data.map(item => columnNames.map(col => item[col])); // Transform JSON to the desired format
+
+    const queryStr = `INSERT INTO ${tableName} (${columnNames.join(', ')}) VALUES ? 
+                      ON DUPLICATE KEY UPDATE ${columnNames.map(col => `${col} = VALUES(${col})`).join(', ')}`;
+
+    try {
+        await executeQuery(queryStr, [data]);
+        return { code: 200, message: `${tableName} Insertion Successful` };
+    } catch (error) {
+        console.error(error);
+        return { code: 500, message: `Unexpected Internal Error Occurred in ${tableName}` };
+    }
+};
+
+// Route for loading Classes
 router.post(`${baseURL}/admin/loadClass`, async (req, res) => {
-    if(!(req.body.password === password)) {
-        res.status(403).json(authMessage);
-        return;
+    if (req.body.password !== password) {
+        return res.status(403).json(authMessage); // Unauthorized
     }
-    const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require(tableDir + '/class.json');
-    // Get JSON file path
-    const Classes = jsonFile[2].data; // First 2 elements are metadata
-    let data = [];
-    for(let i in Classes) {
-        data.push([Classes[i].className, Classes[i].classDescription]); // JSON -> Array
-    }
-    console.log(data);
-    const classQuery = `INSERT INTO class VALUES ?
-    ON DUPLICATE KEY UPDATE
-    className = VALUES(className),
-    classDescription = VALUES(classDescription)`;
-    connection.query(classQuery,[data],(error, results) => {
-        if(error) {
-            let errorMessage = options.responseErrorMessage;
-            errorMessage.error.code = 500;
-            errorMessage.err.message = "Unexpected Internal Error Occured";
-            res.status(500).json(errorMessage);
-        } else {
-            let resultsMessage = options.responseResultMessage;
-            resultsMessage.results.code = 200;
-            resultsMessage.results.message = "Insertion Succesful";
-            res.status(200).json(resultsMessage);
-        }
-    });
-    connection.end();
+
+    const result = await loadDataIntoTable(
+        `${tableDir}/class.json`,
+        'class',
+        ['className', 'classDescription']
+    );
+
+    res.status(result.code).json({ results: { code: result.code, message: result.message } });
 });
 
+// Route for loading Skills
 router.post(`${baseURL}/admin/loadSkill`, async (req, res) => {
-    if(!(req.body.password === password)) {
-        res.status(403).json(authMessage);
-        return;
+    if (req.body.password !== password) {
+        return res.status(403).json(authMessage); // Unauthorized
     }
-    const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require(tableDir + '/skill.json');
-    const Skills = jsonFile[2].data;
-    let data = [];
-    for(let i in Skills) {
-        data.push([Skills[i].skillName, Skills[i].skillDescription, Skills[i].skillType, Skills[i].skillBaseDamage, Skills[i].skillBaseCost]);
-    }
-    console.log(data);
-    const skillQuery = `INSERT INTO skill VALUES ?
-    ON DUPLICATE KEY UPDATE
-    skillName = VALUES(skillName),
-    skillDescription = VALUES(skillDescription),
-    skillType = VALUES(skillType),
-    skillBaseDamage = VALUES(skillBaseDamage),
-    skillBaseCost = VALUES(skillBaseCost)`;
-    connection.query(skillQuery,[data],(error, results) => {
-        if(error) {
-            let errorMessage = options.responseErrorMessage;
-            errorMessage.error.code = 500;
-            errorMessage.err.message = "Unexpected Internal Error Occured";
-            res.status(500).json(errorMessage);
-        } else {
-            let resultsMessage = options.responseResultMessage;
-            resultsMessage.results.code = 200;
-            resultsMessage.results.message = "Insertion Succesful";
-            res.status(200).json(resultsMessage);
-        }
-    });
-    connection.end();
+
+    const result = await loadDataIntoTable(
+        `${tableDir}/skill.json`,
+        'skill',
+        ['skillName', 'skillDescription', 'skillType', 'skillBaseDamage', 'skillBaseCost']
+    );
+
+    res.status(result.code).json({ results: { code: result.code, message: result.message } });
 });
 
+// Route for loading Class-Skill Pairs
 router.post(`${baseURL}/admin/loadPair`, async (req, res) => {
-    if(!(req.body.password === password)) {
-        res.status(403).json(authMessage);
-        return;
+    if (req.body.password !== password) {
+        return res.status(403).json(authMessage); // Unauthorized
     }
-    const connection = mysql.createConnection(databaseConfig);
-    const jsonFile = require(tableDir + '/class_skill_pairs.json');
-    const Pairs = jsonFile[2].data;
-    let data = [];
-    for(let i in Pairs) {
-        data.push([Pairs[i].pair_index, Pairs[i].className, Pairs[i].skillName]);
-    }
-    console.log(data);
-    const pairQuery = `INSERT INTO class_skill_pairs VALUES ?
-    ON DUPLICATE KEY UPDATE
-    pair_index = VALUES(pair_index),
-    className = VALUES(className),
-    skillName = VALUES(skillName)`;
-    connection.query(pairQuery,[data],(error, results) => {
-        if(error) {
-            let errorMessage = options.responseErrorMessage;
-            errorMessage.error.code = 500;
-            errorMessage.err.message = "Unexpected Internal Error Occured";
-            res.status(500).json(errorMessage);
-        } else {
-            let resultsMessage = options.responseResultMessage;
-            resultsMessage.results.code = 200;
-            resultsMessage.results.message = "Insertion Succesful";
-            res.status(200).json(resultsMessage);
-        }
-    });
-    connection.end();
+
+    const result = await loadDataIntoTable(
+        `${tableDir}/class_skill_pairs.json`,
+        'class_skill_pairs',
+        ['pair_index', 'className', 'skillName']
+    );
+
+    res.status(result.code).json({ results: { code: result.code, message: result.message } });
 });
 
 module.exports = router;
