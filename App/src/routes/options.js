@@ -1,5 +1,5 @@
 require('dotenv').config({
-    path: require('path').resolve(__dirname, '../../.env') // Load environment variables from .env file
+    path: require('path').resolve(__dirname, '../../../.env') // Load environment variables from .env file
 }); // Load environment variables from .env file
 
 const baseURL = '/SoulFusion';
