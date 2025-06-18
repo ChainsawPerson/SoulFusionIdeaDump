@@ -12,6 +12,7 @@ function checkClasses() {
 }
 
 function checkMagic() {
+    window.location.href =`${window.location.origin}/SoulFusion/Magic`;
     console.log(button2.innerText);
 }
 

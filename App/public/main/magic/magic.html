@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../../styles/main.css">
+        <link rel="stylesheet" href="../../styles/magic.css">
+        <title>Magic</title>
+        <link rel="icon" href="../../images/favicon.png">
+    </head>
+    <body onload="loadMagic()">
+        <div id="Header">
+            <p id="appTitle" onclick="window.location.href = '/SoulFusion'">SoulFusion</p>
+            <p id="appDescription">Available Magic</p>
+        </div>
+        <div id="MagicView">
+            <!-- Magic Magic will be loaded here -->
+            
+        </div>
+        <div class="navigationButtons">
+            <button id="backButton" onclick="history.back()">Back</button>
+            <button id="magicSuggestion" class="suggestionButton" onclick="magicSuggestion()">+</button>
+        </div>
+        <script src="../../main/magic/magic.js"></script>
+    </body>
+</html>

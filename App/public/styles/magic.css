@@ -1,0 +1,48 @@
+#MagicView {
+    display: grid;
+    margin: 10px 50px;
+    grid-template-columns: 450px 450px 450px;
+}
+
+.PrimaryMagicContainer {
+    margin: 10px 10px;
+    border: 3px dashed #1b1a17;
+}
+
+#primaryMagicName {
+    font-size: 50px;
+    text-align: center;
+    text-shadow: 2px 2px #1b1a17;
+}
+
+#primaryMagicDescription {
+    font-size: 35px;
+    text-align: center;
+}
+
+.navigationButtons {
+    align-self: center;
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.suggestionButton {
+    margin: 20px calc(100vw - 250px);
+    height: 75px;
+    padding-left: 22px;
+    padding-right: 35px;
+    padding-bottom: 5px;
+    width: 75px;
+    line-height: 0px;
+    vertical-align: sub;
+    justify-self: flex-end;
+    border-radius: 50px;
+}
+
+.suggestionButton:hover{
+    font-size: 70px;
+    padding-left: 16px;
+    padding-right: 45px;
+    font-weight: 700;
+}

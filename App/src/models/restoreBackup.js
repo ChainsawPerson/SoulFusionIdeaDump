@@ -152,4 +152,19 @@ router.post(`${baseURL}/admin/loadPair`, async (req, res) => {
     res.status(result.code).json({ results: { code: result.code, message: result.message } });
 });
 
+// Route for loading Primary Magic
+router.post(`${baseURL}/admin/loadPrimaryMagic`, async (req, res) => {
+    if (req.body.password !== password) {
+        return res.status(403).json(authMessage); // Unauthorized
+    }
+
+    const result = await loadDataIntoTable(
+        `${tableDir}/primaryMagic.json`,
+        'primaryMagic',
+        ['primaryMagicName', 'primaryMagicDescription']
+    );
+
+    res.status(result.code).json({ results: { code: result.code, message: result.message } });
+});
+
 module.exports = router;

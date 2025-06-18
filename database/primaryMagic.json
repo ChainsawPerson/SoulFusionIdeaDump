@@ -1,0 +1,15 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"soulfusion"},
+{"type":"table","name":"primaryMagic","database":"soulfusion","data":
+[
+{"primaryMagicName":"Light","primaryMagicDescription":"Divine Magic associated with the Creator Gods."},
+{"primaryMagicName":"Dark","primaryMagicDescription":"Unholy Magic associated with Destruction."},
+{"primaryMagicName":"Fire","primaryMagicDescription":"A common Magic associated with Power."},
+{"primaryMagicName":"Water","primaryMagicDescription":"A common Magic associated with Utility."},
+{"primaryMagicName":"Earth","primaryMagicDescription":"A common Magic associated with Creation."},
+{"primaryMagicName":"Nature","primaryMagicDescription":"A common Magic associated with Life."},
+{"primaryMagicName":"Dimensional","primaryMagicDescription":"Rare Magic associated with the Unknown."}
+]
+}
+]

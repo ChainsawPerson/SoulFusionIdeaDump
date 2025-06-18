@@ -60,6 +60,40 @@ CREATE TABLE IF NOT EXISTS `skill` (
   `skillBaseCost` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+--
+-- Table structure for table `primaryMagic`
+--
+
+CREATE TABLE IF NOT EXISTS `primaryMagic` (
+  `primaryMagicName` varchar(256) NOT NULL,
+  `primaryMagicDescription` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `secondaryMagic`
+--
+CREATE TABLE IF NOT EXISTS `secondaryMagic` (
+  `secondaryMagicName` varchar(256) NOT NULL,
+  `secondaryMagicDescription` text DEFAULT NULL,
+  `secondaryMagicType` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `primary_secondary_pairs`
+--
+CREATE TABLE IF NOT EXISTS `primary_secondary_pairs` (
+  `pair_index` int(11) NOT NULL,
+  `primaryMagicName` varchar(256) NOT NULL,
+  `secondaryMagicName` varchar(256) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
 --
 -- Indexes for dumped tables
 --
@@ -86,6 +120,28 @@ ALTER TABLE `skill`
   ADD KEY IF NOT EXISTS `skillName` (`skillName`);
 
 --
+-- Indexes for table `primaryMagic`
+--
+ALTER TABLE `primaryMagic`
+  ADD PRIMARY KEY IF NOT EXISTS (`primaryMagicName`),
+  ADD KEY IF NOT EXISTS `primaryMagicName` (`primaryMagicName`);
+
+--
+-- Indexes for table `secondaryMagic`
+--
+ALTER TABLE `secondaryMagic`
+  ADD PRIMARY KEY IF NOT EXISTS (`secondaryMagicName`),
+  ADD KEY IF NOT EXISTS `secondaryMagicName` (`secondaryMagicName`);
+
+--
+-- Indexes for table `primary_secondary_pairs`
+--
+ALTER TABLE `primary_secondary_pairs`
+  ADD PRIMARY KEY IF NOT EXISTS (`pair_index`),
+  ADD KEY IF NOT EXISTS `primary_pair` (`primaryMagicName`),
+  ADD KEY IF NOT EXISTS `secondary_pair` (`secondaryMagicName`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -93,6 +149,12 @@ ALTER TABLE `skill`
 -- AUTO_INCREMENT for table `class_skill_pairs`
 --
 ALTER TABLE `class_skill_pairs`
+  MODIFY `pair_index` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `primary_secondary_pairs`
+--
+ALTER TABLE `primary_secondary_pairs`
   MODIFY `pair_index` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -105,6 +167,13 @@ ALTER TABLE `class_skill_pairs`
 ALTER TABLE `class_skill_pairs`
   ADD CONSTRAINT `class_pair` FOREIGN KEY (`className`) REFERENCES `class` (`className`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `skill_pair` FOREIGN KEY (`skillName`) REFERENCES `skill` (`skillName`);
+COMMIT;
+
+--
+-- Constraints for table `primary_secondary_pairs`
+ALTER TABLE `primary_secondary_pairs`
+  ADD CONSTRAINT `primary_pair` FOREIGN KEY (`primaryMagicName`) REFERENCES `primaryMagic` (`primaryMagicName`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `secondary_pair` FOREIGN KEY (`secondaryMagicName`) REFERENCES `secondaryMagic` (`secondaryMagicName`);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
