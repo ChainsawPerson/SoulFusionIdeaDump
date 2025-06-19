@@ -167,4 +167,52 @@ router.post(`${baseURL}/admin/loadPrimaryMagic`, async (req, res) => {
     res.status(result.code).json({ results: { code: result.code, message: result.message } });
 });
 
+// Route for loading Secondary Magic
+router.post(`${baseURL}/admin/loadSecondaryMagic`, async (req, res) => {
+    if (req.body.password !== password) {
+        return res.status(403).json(authMessage); // Unauthorized
+    }
+
+    const result = await loadDataIntoTable(
+        `${tableDir}/secondaryMagic.json`,
+        'secondaryMagic',
+        ['secondaryMagicName', 'secondaryMagicDescription', 'secondaryMagicType']
+    );
+
+    res.status(result.code).json({ results: { code: result.code, message: result.message } });
+});
+
+router.post(`${baseURL}/admin/loadMagicPair`, async (req, res) => {
+    if (req.body.password !== password) {
+        return res.status(403).json({ code: 403, message: 'Unauthorized access' });
+    }
+
+    const sqlLoadPairs = `
+        INSERT INTO primary_secondary_pairs (primaryMagicName, secondaryMagicName)
+        SELECT s.secondaryMagicType, s.secondaryMagicName
+        FROM secondaryMagic s
+        JOIN primaryMagic p ON s.secondaryMagicType = p.primaryMagicName;
+    `;
+
+    try {
+        const result = await executeQuery(sqlLoadPairs);
+        res.status(200).json({
+            results: {
+                code: 200,
+                message: 'Magic pairs loaded successfully',
+                affectedRows: result.affectedRows || null
+            }
+        });
+    } catch (error) {
+        console.error('Error inserting magic pairs:', error);
+        res.status(500).json({
+            results: {
+                code: 500,
+                message: 'Failed to insert magic pairs',
+                error: error.message || error
+            }
+        });
+    }
+});
+
 module.exports = router;

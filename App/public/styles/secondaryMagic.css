@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'StempelGaramondRoman';
+    src: url('../fonts/Stempel\ Garamond\ Roman.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+p{
+    font-family: 'StempelGaramondRoman';
+}
+
+button{
+    animation: none;
+}
+
+#MagicView {
+    display: grid;
+    justify-content: center;
+    margin: auto;
+    width: 50%;
+    border: hidden;
+    grid-template-columns: auto;
+}
+
+#SecondaryMagicContainer {
+    display: grid;
+    margin: 0px -400px;
+    grid-template-columns: 450px 450px 450px;
+}
+
+#SecondaryMagic {
+    margin: 15px;
+    padding: 20px;
+    border: 3px double #1b1a17;
+    word-wrap: break-word;
+    width: 400px;
+    height: 400px;
+}
+
+#SecondaryMagic:hover {
+    box-shadow: #1b1a17 10px 10px 20px 10px;
+}
+
+#SecondaryMagicName {
+    font-weight: bolder;
+    font-size: 45px;
+}
+
+#SecondaryMagicDescription {
+    font-weight: 600;
+    font-size: 30px;
+}
+
+#SecondaryMagicType {
+    font-weight: 550;
+    font-size: 25px;
+}
+
+#SecondaryMagicBaseDamage {
+    font-size: 25px;
+}
+
+#SecondaryMagicBaseCost {
+    font-size: 25px;
+}

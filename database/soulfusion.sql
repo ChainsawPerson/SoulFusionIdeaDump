@@ -139,7 +139,8 @@ ALTER TABLE `secondaryMagic`
 ALTER TABLE `primary_secondary_pairs`
   ADD PRIMARY KEY IF NOT EXISTS (`pair_index`),
   ADD KEY IF NOT EXISTS `primary_pair` (`primaryMagicName`),
-  ADD KEY IF NOT EXISTS `secondary_pair` (`secondaryMagicName`);
+  ADD KEY IF NOT EXISTS `secondary_pair` (`secondaryMagicName`),
+  ADD UNIQUE (`primaryMagicName`, `secondaryMagicName`);
 
 --
 -- AUTO_INCREMENT for dumped tables

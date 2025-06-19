@@ -2,15 +2,12 @@ function SecondaryMagic(secondaryMagicName, secondaryMagicDescription, secondary
     secondaryMagicBaseDamage, secondaryMagicBaseCost) {
         this.secondaryMagicName = secondaryMagicName;
         this.secondaryMagicDescription = secondaryMagicDescription;
-        this.secondaryMagicType = secondaryMagicType;
-        this.secondaryMagicBaseDamage = secondaryMagicBaseDamage;
-        this.secondaryMagicBaseCost = secondaryMagicBaseCost;
 };
 
-function PrimaryMagic(primaryMagicName, primaryMagicDescription, primaryMagicSecondaryMagicList) {
+function PrimaryMagic(primaryMagicName, primaryMagicDescription, secondaryMagicList) {
     this.primaryMagicName = primaryMagicName;
     this.primaryMagicDescription = primaryMagicDescription;
-    this.primaryMagicSecondaryMagicList = primaryMagicSecondaryMagicList;
+    this.secondaryMagicList = secondaryMagicList;
 };
 
 function createPrimaryMagicDiv(currentPrimaryMagic) {
@@ -65,7 +62,7 @@ function loadMagic() { // Load the Cards
 }
 
 function createSecondaryMagicDiv(selectedPrimaryMagic) {
-    const secondaryMagicList = selectedPrimaryMagic.primaryMagicSecondaryMagicList;
+    const secondaryMagicList = selectedPrimaryMagic.secondaryMagicList;
     const details = document.createElement("div");
     details.id = "SecondaryMagicContainer";
     for (let secondaryMagic in secondaryMagicList) {
@@ -75,7 +72,7 @@ function createSecondaryMagicDiv(selectedPrimaryMagic) {
         // First we will add the secondaryMagic name:
         const secondaryMagicNamePar = document.createElement("p"); // SecondaryMagic Name Paragraph
         secondaryMagicNamePar.id = "SecondaryMagicName"; // Paragraph ID
-        const secondaryMagicName = document.createTextNode('SecondaryMagic: ' + secondaryMagicList[secondaryMagic].secondaryMagicName); // SecondaryMagic Name
+        const secondaryMagicName = document.createTextNode(secondaryMagicList[secondaryMagic].secondaryMagicName); // SecondaryMagic Name
         secondaryMagicNamePar.appendChild(secondaryMagicName); // Name paragraph complete
         div.appendChild(secondaryMagicNamePar); // Add Paragraph to Div
 
@@ -85,13 +82,6 @@ function createSecondaryMagicDiv(selectedPrimaryMagic) {
         const secondaryMagicDescription = document.createTextNode('Description: ' + secondaryMagicList[secondaryMagic].secondaryMagicDescription); // SecondaryMagic Descr
         secondaryMagicDescriptionPar.appendChild(secondaryMagicDescription); // Added Description
         div.appendChild(secondaryMagicDescriptionPar); // Add Paragraph to Div
-
-        // Next the SecondaryMagic Type:
-        const secondaryMagicTypePar = document.createElement("p"); // SecondaryMagic Type Paragraph
-        secondaryMagicTypePar.id = "SecondaryMagicType"; // Paragraph ID
-        const secondaryMagicType = document.createTextNode('Type: ' + secondaryMagicList[secondaryMagic].secondaryMagicType); // SecondaryMagic Type
-        secondaryMagicTypePar.appendChild(secondaryMagicType); // Added Type
-        div.appendChild(secondaryMagicTypePar); // Add Paragraph to Div
 
         // Add the secondaryMagic to the container:
         details.appendChild(div);
@@ -118,11 +108,10 @@ function primaryMagicSpecific() {
     }).then((data) => {
         let getPrimaryMagic = data[0];
         var secondaryMagicList = [];
-        for (var secondaryMagic in getPrimaryMagic.primaryMagicSecondaryMagicList) {
+        for (var secondaryMagic in getPrimaryMagic.secondaryMagicList) {
             secondaryMagicList.push(new SecondaryMagic(
-                getPrimaryMagic.primaryMagicSecondaryMagicList[secondaryMagic].secondaryMagicName,
-                getPrimaryMagic.primaryMagicSecondaryMagicList[secondaryMagic].secondaryMagicDescription,
-                getPrimaryMagic.primaryMagicSecondaryMagicList[secondaryMagic].secondaryMagicType
+                getPrimaryMagic.secondaryMagicList[secondaryMagic].secondaryMagicName,
+                getPrimaryMagic.secondaryMagicList[secondaryMagic].secondaryMagicDescription,
             ));
         }
         primaryMagicDetails(new PrimaryMagic(

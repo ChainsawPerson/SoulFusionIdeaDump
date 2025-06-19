@@ -1,0 +1,53 @@
+[
+    {
+        "type": "header",
+        "version": "5.2.1",
+        "comment": "Export to JSON plugin for PHPMyAdmin"
+    },
+    {
+        "type": "database",
+        "name": "soulfusion"
+    },
+    {
+        "type": "table",
+        "name": "primaryMagic",
+        "database": "soulfusion",
+        "data": [
+            {
+                "secondaryMagicName": "Holy",
+                "secondaryMagicDescription": "An Application of Light magic that allows the user to create barriers and purify objects.",
+                "secondaryMagicType": "Light"
+            },
+            {
+                "secondaryMagicName": "Blood",
+                "secondaryMagicDescription": "An Application of Dark magic that allows the user to manipulate blood, controlling its flow and properties.",
+                "secondaryMagicType": "Dark"
+            },
+            {
+                "secondaryMagicName": "Necromancy",
+                "secondaryMagicDescription": "An Application of Dark magic that allows the user to raise the dead and control undead creatures.",
+                "secondaryMagicType": "Dark"
+            },
+            {
+                "secondaryMagicName": "Healing",
+                "secondaryMagicDescription": "An Application of Nature magic that allows the user to heal wounds and cure ailments.",
+                "secondaryMagicType": "Nature"
+            },
+            {
+                "secondaryMagicName": "Ice",
+                "secondaryMagicDescription": "An Application of Water magic that allows the user to freeze objects and create ice structures.",
+                "secondaryMagicType": "Water"
+            },
+            {
+                "secondaryMagicName": "Gravity",
+                "secondaryMagicDescription": "An Application of Dimensional magic that allows the user to manipulate gravitational forces, affecting weight and movement.",
+                "secondaryMagicType": "Dimensional"
+            },
+            {
+                "secondaryMagicName": "Teleportation",
+                "secondaryMagicDescription": "An Application of Dimensional magic that allows the user to instantly travel from one location to another.",
+                "secondaryMagicType": "Dimensional"
+            }
+        ]
+    }
+]

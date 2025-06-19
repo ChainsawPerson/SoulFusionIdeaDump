@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <!--
-    This is the html for the specified class.
+    This is the html for the specified Primary Magic.
 --->
 <html>
     <head>
         <link rel="stylesheet" href="../../styles/main.css">
-        <link rel="stylesheet" href="../../styles/class.css">
-        <link rel="stylesheet" href="../../styles/skills.css">
-        <title id="ClassTitle"></title>
+        <link rel="stylesheet" href="../../styles/magic.css">
+        <link rel="stylesheet" href="../../styles/secondaryMagic.css">
+        <title id="MagicTitle"></title>
         <link rel="icon" href="../../images/favicon.png" id="favicon">
         <script>
-            const title = document.getElementById('ClassTitle');
+            const title = document.getElementById('MagicTitle');
             const parts = window.location.href.split('/');
             const foo = lastSegment = parts.pop() || parts.pop();
             const titleText = document.createTextNode(foo);
@@ -19,15 +19,15 @@
             favicon.href = '../../images/' + foo + '.png';
         </script>
     </head>
-    <body onload="classSpecific()">
+    <body onload="primaryMagicSpecific()">
         <div id="Header">
             <p id="appTitle" onclick="window.location.href = '/SoulFusion'">SoulFusion</p>
         </div>
-        <div id="ClassView"></div>
+        <div id="MagicView"></div>
     </body>
     <div class="navigationButtons">
         <button id="backButton" onclick="history.back()">Back</button>
-        <button id="skillSuggestion" class="suggestionButton" onclick="classSuggestion()">+</button>
+        <button id="magicSuggestion" class="suggestionButton" onclick="magicSuggestion()">+</button>
     </div>
-    <script src="../../main/classes/classes.js"></script>
+    <script src="../../main/magic/magic.js"></script>
 </html>

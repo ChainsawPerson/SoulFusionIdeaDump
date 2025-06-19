@@ -9,7 +9,7 @@ router.get(`${baseURL}/Magic`, (req, res) => {
 })
 
 router.get(`${baseURL}/Magic/:Magicname`, (req, res) => {
-    res.status(200).sendFile(path.join(__dirname,'magic.html'));
+    res.status(200).sendFile(path.join(__dirname,'primaryMagic.html'));
 })
 
 module.exports = router;
