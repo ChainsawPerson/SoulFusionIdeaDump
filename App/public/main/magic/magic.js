@@ -1,5 +1,4 @@
-function SecondaryMagic(secondaryMagicName, secondaryMagicDescription, secondaryMagicType,
-    secondaryMagicBaseDamage, secondaryMagicBaseCost) {
+function SecondaryMagic(secondaryMagicName, secondaryMagicDescription) {
         this.secondaryMagicName = secondaryMagicName;
         this.secondaryMagicDescription = secondaryMagicDescription;
 };
