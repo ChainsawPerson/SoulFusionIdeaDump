@@ -17,5 +17,6 @@ function checkMagic() {
 }
 
 function checkSouls() {
+    window.location.href =`${window.location.origin}/SoulFusion/Souls`;
     console.log(button3.innerText);
 }

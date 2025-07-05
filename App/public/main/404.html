@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <style rel="stylesheet" type="text/css">
+        body {
+            background: linear-gradient(60deg, #1b1a17, #38322b, #695442,
+                    #a78a6d, #f4efde);
+            background-size: 200% 200%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        p {
+            font-family: "StempelGaramondRoman";
+            font-size: 24px;
+            color: black;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            text-align: center;
+            background: none;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: #1b1a17 10px 10px 20px 10px;
+        }
+
+        h1 {
+            color: black;
+            font-family: "StempelGaramondRoman";
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            animation-iteration-count: 0;
+            box-shadow: 5px 5px 5px;
+        }
+
+        button {
+            font-family: "StempelGaramondRoman";
+            font-size: 50px;
+            background: linear-gradient(-60deg, #1b1a17, #38322b, #695442);
+            background-size: 200% 300%;
+            animation: gradient 15s ease infinite;
+            box-shadow: 5px 5px 5px #1b1a17;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @font-face {
+            font-family: 'StempelGaramondRoman';
+            src: url('../fonts/Stempel\ Garamond\ Roman.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+    <script type="text/javascript">
+        const sendBack = () => {
+            window.location.href = window.location.origin + '/SoulFusion';
+        };
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>404 - Page Not Found</h1>
+        <p>The page you're looking for doesn't exist or has been moved.</p>
+        <button onclick="sendBack()">Back to Home</button>
+    </div>
+</body>
+
+</html>
